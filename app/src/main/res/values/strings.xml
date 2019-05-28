@@ -2,4 +2,7 @@
     <string name="app_name">Car Remote</string>
     <string name="introduction">Selecteaza un dispozitiv bluetooth din lista de mai jos:</string>
     <string name="empty_list">Nu sunt dipozitive imperecheate sau modulul Bluetooth nu e pornit</string>
+    <string name="driver_name">Numele soferului: </string>
+    <string name="device_name">Nume dispozitiv: </string>
+    <string name="adress_name">Adresa dispozitiv: </string>
 </resources>

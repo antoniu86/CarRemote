@@ -44,13 +44,13 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        final String address = BTelement.substring(BTelement.length() - 17);
-        final String name = BTelement.substring(0, BTelement.length() - 17);
+        final String address = BTelement.substring(BTelement.length() - 17).trim();;
+        final String name = BTelement.substring(0, BTelement.length() - 17).trim();;
 
         Intent myIntent = new Intent(getBaseContext(), ControllerActivity.class);
         myIntent.putExtra("numeSofer", nume.getText().toString());
         myIntent.putExtra("numeDispozitiv", name);
-        myIntent.putExtra("AdresaDispozitiv", address);
+        myIntent.putExtra("adresaDispozitiv", address);
         startActivity(myIntent);
     }
 
