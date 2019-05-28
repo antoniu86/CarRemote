@@ -3,11 +3,6 @@ package com.example.carremote;
 import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothGatt;
-import android.bluetooth.BluetoothGattCallback;
-import android.bluetooth.BluetoothGattCharacteristic;
-import android.bluetooth.BluetoothGattService;
-import android.bluetooth.BluetoothProfile;
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
 import android.os.Build;
@@ -25,10 +20,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.UUID;
 
-@RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
 public class ControllerActivity extends AppCompatActivity {
     public static String MODULE_MAC;
     public final static int REQUEST_ENABLE_BT = 1;
