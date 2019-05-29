@@ -22,27 +22,28 @@ import java.io.IOException;
 import java.util.UUID;
 
 public class ControllerActivity extends AppCompatActivity {
-    public static String MODULE_MAC;
-    public final static int REQUEST_ENABLE_BT = 1;
     private static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
-    BluetoothAdapter bta;                 //bluetooth stuff
-    BluetoothSocket mmSocket;             //bluetooth stuff
-    BluetoothDevice mmDevice;             //bluetooth stuff
-    ConnectedThread btt = null;           //Our custom thread
+    public final static int REQUEST_ENABLE_BT = 1;
+
+    private BluetoothAdapter bta;
+    private BluetoothSocket mmSocket;
+    private BluetoothDevice mmDevice;
+    private ConnectedThread btt = null;
+
     public Handler mHandler;
-    private int counter = 0;
 
     private TextView Tx;
     private TextView Rx;
+
+    public static String MODULE_MAC;
+
+    private int counter = 0;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_controller);
-
-        Tx = (TextView) findViewById(R.id.Tx);
-        Rx = (TextView) findViewById(R.id.Rx);
 
         String numeSofer = getIntent().getStringExtra("numeSofer");
         TextView numeSoferText = (TextView) findViewById(R.id.numeSofer);
@@ -52,14 +53,20 @@ public class ControllerActivity extends AppCompatActivity {
         TextView numeDispozitivText = (TextView) findViewById(R.id.numeDispozitiv);
         numeDispozitivText.setText(numeDispozitiv);
 
-        MODULE_MAC = getIntent().getStringExtra("adresaDispozitiv");
+        String adresaDispozitiv = getIntent().getStringExtra("adresaDispozitiv");
         TextView adresaDispozitivText = (TextView) findViewById(R.id.adresaDispozitiv);
-        adresaDispozitivText.setText(MODULE_MAC);
+        adresaDispozitivText.setText(adresaDispozitiv);
+
+        bta = BluetoothAdapter.getDefaultAdapter();
+        Tx = (TextView) findViewById(R.id.Tx);
+        Rx = (TextView) findViewById(R.id.Rx);
+        MODULE_MAC = adresaDispozitiv;
+
+        initiateBluetoothProcess();
 
         Button up = (Button) findViewById(R.id.up);
         up.setOnTouchListener(new View.OnTouchListener() {
             private Handler aHandler = new Handler();
-
 
             private Runnable mUpdateTaskdown = new Runnable() {
                 public void run() {
@@ -67,20 +74,18 @@ public class ControllerActivity extends AppCompatActivity {
                     String text = "u " + counter;
                     btt.write(text.getBytes());
                     Tx.setText(text);
-                    aHandler.postAtTime(this, SystemClock.uptimeMillis());
+                    aHandler.postAtTime(this, SystemClock.uptimeMillis() + 50);
                 }//end run
             };// end runnable
 
             @Override
             public boolean onTouch(View arg0, MotionEvent arg1) {
-                int action = arg1.getAction();
-
-                if (action == MotionEvent.ACTION_DOWN) {
+                if (arg1.getAction() == MotionEvent.ACTION_DOWN) {
                     Toast.makeText(getApplicationContext(), "inainte", Toast.LENGTH_SHORT).show();
                     aHandler.removeCallbacks(mUpdateTaskdown);
-                    aHandler.postAtTime(mUpdateTaskdown,SystemClock.uptimeMillis() + 50);
+                    aHandler.postAtTime(mUpdateTaskdown, SystemClock.uptimeMillis() + 50);
                     return true;
-                } else if (action == MotionEvent.ACTION_UP) {
+                } else if (arg1.getAction() == MotionEvent.ACTION_UP) {
                     counter = 0;
                     Tx.setText("" + counter);
                     aHandler.removeCallbacks(mUpdateTaskdown);
@@ -101,20 +106,18 @@ public class ControllerActivity extends AppCompatActivity {
                     String text = "d " + counter;
                     btt.write(text.getBytes());
                     Tx.setText(text);
-                    aHandler.postAtTime(this, SystemClock.uptimeMillis());
+                    aHandler.postAtTime(this, SystemClock.uptimeMillis() + 50);
                 }//end run
             };// end runnable
 
             @Override
             public boolean onTouch(View arg0, MotionEvent arg1) {
-                int action = arg1.getAction();
-
-                if (action == MotionEvent.ACTION_DOWN) {
+                if (arg1.getAction() == MotionEvent.ACTION_DOWN) {
                     Toast.makeText(getApplicationContext(), "inapoi", Toast.LENGTH_SHORT).show();
                     aHandler.removeCallbacks(mUpdateTaskdown);
-                    aHandler.postAtTime(mUpdateTaskdown,SystemClock.uptimeMillis() + 50);
+                    aHandler.postAtTime(mUpdateTaskdown, SystemClock.uptimeMillis() + 50);
                     return true;
-                } else if (action == MotionEvent.ACTION_UP) {
+                } else if (arg1.getAction() == MotionEvent.ACTION_UP) {
                     counter = 0;
                     Tx.setText("" + counter);
                     aHandler.removeCallbacks(mUpdateTaskdown);
@@ -135,20 +138,18 @@ public class ControllerActivity extends AppCompatActivity {
                     String text = "l " + counter;
                     btt.write(text.getBytes());
                     Tx.setText(text);
-                    aHandler.postAtTime(this, SystemClock.uptimeMillis());
+                    aHandler.postAtTime(this, SystemClock.uptimeMillis() + 50);
                 }//end run
             };// end runnable
 
             @Override
             public boolean onTouch(View arg0, MotionEvent arg1) {
-                int action = arg1.getAction();
-
-                if (action == MotionEvent.ACTION_DOWN) {
+                if (arg1.getAction() == MotionEvent.ACTION_DOWN) {
                     Toast.makeText(getApplicationContext(), "stanga", Toast.LENGTH_SHORT).show();
                     aHandler.removeCallbacks(mUpdateTaskdown);
-                    aHandler.postAtTime(mUpdateTaskdown,SystemClock.uptimeMillis() + 50);
+                    aHandler.postAtTime(mUpdateTaskdown, SystemClock.uptimeMillis() + 50);
                     return true;
-                } else if (action == MotionEvent.ACTION_UP) {
+                } else if (arg1.getAction() == MotionEvent.ACTION_UP) {
                     counter = 0;
                     Tx.setText("" + counter);
                     aHandler.removeCallbacks(mUpdateTaskdown);
@@ -169,20 +170,18 @@ public class ControllerActivity extends AppCompatActivity {
                     String text = "d " + counter;
                     btt.write(text.getBytes());
                     Tx.setText(text);
-                    aHandler.postAtTime(this, SystemClock.uptimeMillis());
+                    aHandler.postAtTime(this, SystemClock.uptimeMillis() + 50);
                 }//end run
             };// end runnable
 
             @Override
             public boolean onTouch(View arg0, MotionEvent arg1) {
-                int action = arg1.getAction();
-
-                if (action == MotionEvent.ACTION_DOWN) {
+                if (arg1.getAction() == MotionEvent.ACTION_DOWN) {
                     Toast.makeText(getApplicationContext(), "dreapta", Toast.LENGTH_SHORT).show();
                     aHandler.removeCallbacks(mUpdateTaskdown);
-                    aHandler.postAtTime(mUpdateTaskdown,SystemClock.uptimeMillis() + 50);
+                    aHandler.postAtTime(mUpdateTaskdown, SystemClock.uptimeMillis() + 50);
                     return true;
-                } else if (action == MotionEvent.ACTION_UP) {
+                } else if (arg1.getAction() == MotionEvent.ACTION_UP) {
                     counter = 0;
                     Tx.setText("" + counter);
                     aHandler.removeCallbacks(mUpdateTaskdown);
@@ -193,27 +192,136 @@ public class ControllerActivity extends AppCompatActivity {
             }
         });
 
-        bta = BluetoothAdapter.getDefaultAdapter();
+        Button aBtn = (Button) findViewById(R.id.aBtn);
+        aBtn.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View arg0, MotionEvent arg1) {
+                if (arg1.getAction() == MotionEvent.ACTION_DOWN) {
+                    counter++;
+                    String text = "a " + counter;
+                    btt.write(text.getBytes());
+                    Tx.setText(text);
+                    return true;
+                } else if (arg1.getAction() == MotionEvent.ACTION_UP) {
+                    counter = 0;
+                    Tx.setText("" + counter);
+                    return true;
+                }
 
-        //if bluetooth is not enabled then create Intent for user to turn it on
-        if(!bta.isEnabled()){
-            Intent enableBTIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            startActivityForResult(enableBTIntent, REQUEST_ENABLE_BT);
-        }else{
-            initiateBluetoothProcess();
-        }
+                return false;
+            }
+        });
+
+        Button bBtn = (Button) findViewById(R.id.bBtn);
+        bBtn.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View arg0, MotionEvent arg1) {
+                if (arg1.getAction() == MotionEvent.ACTION_DOWN) {
+                    counter++;
+                    String text = "b " + counter;
+                    btt.write(text.getBytes());
+                    Tx.setText(text);
+                    return true;
+                } else if (arg1.getAction() == MotionEvent.ACTION_UP) {
+                    counter = 0;
+                    Tx.setText("" + counter);
+                    return true;
+                }
+
+                return false;
+            }
+        });
+
+        Button cBtn = (Button) findViewById(R.id.cBtn);
+        cBtn.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View arg0, MotionEvent arg1) {
+                if (arg1.getAction() == MotionEvent.ACTION_DOWN) {
+                    counter++;
+                    String text = "c " + counter;
+                    btt.write(text.getBytes());
+                    Tx.setText(text);
+                    return true;
+                } else if (arg1.getAction() == MotionEvent.ACTION_UP) {
+                    counter = 0;
+                    Tx.setText("" + counter);
+                    return true;
+                }
+
+                return false;
+            }
+        });
+
+        Button xBtn = (Button) findViewById(R.id.xBtn);
+        xBtn.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View arg0, MotionEvent arg1) {
+                if (arg1.getAction() == MotionEvent.ACTION_DOWN) {
+                    counter++;
+                    String text = "x " + counter;
+                    btt.write(text.getBytes());
+                    Tx.setText(text);
+                    return true;
+                } else if (arg1.getAction() == MotionEvent.ACTION_UP) {
+                    counter = 0;
+                    Tx.setText("" + counter);
+                    return true;
+                }
+
+                return false;
+            }
+        });
+
+        Button yBtn = (Button) findViewById(R.id.yBtn);
+        yBtn.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View arg0, MotionEvent arg1) {
+                if (arg1.getAction() == MotionEvent.ACTION_DOWN) {
+                    counter++;
+                    String text = "y " + counter;
+                    btt.write(text.getBytes());
+                    Tx.setText(text);
+                    return true;
+                } else if (arg1.getAction() == MotionEvent.ACTION_UP) {
+                    counter = 0;
+                    Tx.setText("" + counter);
+                    return true;
+                }
+
+                return false;
+            }
+        });
+
+        Button zBtn = (Button) findViewById(R.id.zBtn);
+        zBtn.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View arg0, MotionEvent arg1) {
+                if (arg1.getAction() == MotionEvent.ACTION_DOWN) {
+                    counter++;
+                    String text = "z " + counter;
+                    btt.write(text.getBytes());
+                    Tx.setText(text);
+                    return true;
+                } else if (arg1.getAction() == MotionEvent.ACTION_UP) {
+                    counter = 0;
+                    Tx.setText("" + counter);
+                    return true;
+                }
+
+                return false;
+            }
+        });
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == RESULT_OK && requestCode == REQUEST_ENABLE_BT){
-            initiateBluetoothProcess();
-        }
+    public void goBack(View v){
+        Intent myIntent = new Intent(getBaseContext(), MainActivity.class);
+        TextView numeSoferText = (TextView) findViewById(R.id.numeSofer);
+        myIntent.putExtra("numeSofer", numeSoferText.getText().toString());
+        startActivity(myIntent);
     }
 
     public void initiateBluetoothProcess(){
-        if(bta.isEnabled()){
+        if (bta.isEnabled()){
             //attempt to connect to bluetooth module
             BluetoothSocket tmp = null;
             mmDevice = bta.getRemoteDevice(MODULE_MAC);
@@ -223,32 +331,27 @@ public class ControllerActivity extends AppCompatActivity {
                 tmp = mmDevice.createRfcommSocketToServiceRecord(MY_UUID);
                 mmSocket = tmp;
                 mmSocket.connect();
-                Log.i("[BLUETOOTH]","Connected to: "+mmDevice.getName());
-            }catch(IOException e){
-                try{mmSocket.close();}catch(IOException c){return;}
+            } catch (IOException e){
+                try {
+                    mmSocket.close();
+                } catch (IOException c){
+                    return;
+                }
             }
-
-            Log.i("[BLUETOOTH]", "Creating handler");
 
             mHandler = new Handler(Looper.getMainLooper()){
                 @Override
                 public void handleMessage(Message msg) {
                     //super.handleMessage(msg);
-                    if(msg.what == ConnectedThread.RESPONSE_MESSAGE){
+                    if (msg.what == ConnectedThread.RESPONSE_MESSAGE){
                         String txt = (String)msg.obj;
                     }
                 }
             };
 
-            Log.i("[BLUETOOTH]", "Creating and running Thread");
-            btt = new ConnectedThread(mmSocket,mHandler);
+            btt = new ConnectedThread(mmSocket, mHandler);
             btt.start();
         }
-    }
-
-    public void goBack(View v){
-        Intent myIntent = new Intent(getBaseContext(), MainActivity.class);
-        startActivity(myIntent);
     }
 }
 
