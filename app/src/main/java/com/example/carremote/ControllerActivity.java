@@ -5,11 +5,10 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.support.annotation.RequiresApi;
+import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -29,9 +28,12 @@ public class ControllerActivity extends AppCompatActivity {
     BluetoothAdapter bta;                 //bluetooth stuff
     BluetoothSocket mmSocket;             //bluetooth stuff
     BluetoothDevice mmDevice;             //bluetooth stuff
-    TextView response;                    //UI stuff
     ConnectedThread btt = null;           //Our custom thread
     public Handler mHandler;
+    private int counter = 0;
+
+    private TextView Tx;
+    private TextView Rx;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -39,8 +41,8 @@ public class ControllerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_controller);
 
-        final TextView Tx = (TextView) findViewById(R.id.Tx);
-        final TextView Rx = (TextView) findViewById(R.id.Rx);
+        Tx = (TextView) findViewById(R.id.Tx);
+        Rx = (TextView) findViewById(R.id.Rx);
 
         String numeSofer = getIntent().getStringExtra("numeSofer");
         TextView numeSoferText = (TextView) findViewById(R.id.numeSofer);
@@ -54,84 +56,139 @@ public class ControllerActivity extends AppCompatActivity {
         TextView adresaDispozitivText = (TextView) findViewById(R.id.adresaDispozitiv);
         adresaDispozitivText.setText(MODULE_MAC);
 
-
-
         Button up = (Button) findViewById(R.id.up);
         up.setOnTouchListener(new View.OnTouchListener() {
+            private Handler aHandler = new Handler();
+
+
+            private Runnable mUpdateTaskdown = new Runnable() {
+                public void run() {
+                    counter++;
+                    String text = "u " + counter;
+                    btt.write(text.getBytes());
+                    Tx.setText(text);
+                    aHandler.postAtTime(this, SystemClock.uptimeMillis());
+                }//end run
+            };// end runnable
+
             @Override
             public boolean onTouch(View arg0, MotionEvent arg1) {
                 int action = arg1.getAction();
 
-                if(action == MotionEvent.ACTION_DOWN) {
-                    String text = "#u";
-                    btt.write(text.getBytes());
-                    Tx.setText(text);
+                if (action == MotionEvent.ACTION_DOWN) {
                     Toast.makeText(getApplicationContext(), "inainte", Toast.LENGTH_SHORT).show();
+                    aHandler.removeCallbacks(mUpdateTaskdown);
+                    aHandler.postAtTime(mUpdateTaskdown,SystemClock.uptimeMillis() + 50);
                     return true;
                 } else if (action == MotionEvent.ACTION_UP) {
-                    Tx.setText("");
+                    counter = 0;
+                    Tx.setText("" + counter);
+                    aHandler.removeCallbacks(mUpdateTaskdown);
                     return true;
                 }
+
                 return false;
             }
         });
 
         Button down = (Button) findViewById(R.id.down);
         down.setOnTouchListener(new View.OnTouchListener() {
+            private Handler aHandler = new Handler();
+
+            private Runnable mUpdateTaskdown = new Runnable() {
+                public void run() {
+                    counter++;
+                    String text = "d " + counter;
+                    btt.write(text.getBytes());
+                    Tx.setText(text);
+                    aHandler.postAtTime(this, SystemClock.uptimeMillis());
+                }//end run
+            };// end runnable
+
             @Override
             public boolean onTouch(View arg0, MotionEvent arg1) {
                 int action = arg1.getAction();
 
-                if(action == MotionEvent.ACTION_DOWN) {
-                    String text = "#d";
-                    btt.write(text.getBytes());
-                    Tx.setText(text);
+                if (action == MotionEvent.ACTION_DOWN) {
                     Toast.makeText(getApplicationContext(), "inapoi", Toast.LENGTH_SHORT).show();
+                    aHandler.removeCallbacks(mUpdateTaskdown);
+                    aHandler.postAtTime(mUpdateTaskdown,SystemClock.uptimeMillis() + 50);
                     return true;
                 } else if (action == MotionEvent.ACTION_UP) {
-                    Tx.setText("");
+                    counter = 0;
+                    Tx.setText("" + counter);
+                    aHandler.removeCallbacks(mUpdateTaskdown);
                     return true;
                 }
+
                 return false;
             }
         });
 
         Button left = (Button) findViewById(R.id.left);
         left.setOnTouchListener(new View.OnTouchListener() {
+            private Handler aHandler = new Handler();
+
+            private Runnable mUpdateTaskdown = new Runnable() {
+                public void run() {
+                    counter++;
+                    String text = "l " + counter;
+                    btt.write(text.getBytes());
+                    Tx.setText(text);
+                    aHandler.postAtTime(this, SystemClock.uptimeMillis());
+                }//end run
+            };// end runnable
+
             @Override
             public boolean onTouch(View arg0, MotionEvent arg1) {
                 int action = arg1.getAction();
 
-                if(action == MotionEvent.ACTION_DOWN) {
-                    String text = "#l";
-                    btt.write(text.getBytes());
-                    Tx.setText(text);
+                if (action == MotionEvent.ACTION_DOWN) {
                     Toast.makeText(getApplicationContext(), "stanga", Toast.LENGTH_SHORT).show();
+                    aHandler.removeCallbacks(mUpdateTaskdown);
+                    aHandler.postAtTime(mUpdateTaskdown,SystemClock.uptimeMillis() + 50);
                     return true;
                 } else if (action == MotionEvent.ACTION_UP) {
-                    Tx.setText("");
+                    counter = 0;
+                    Tx.setText("" + counter);
+                    aHandler.removeCallbacks(mUpdateTaskdown);
                     return true;
                 }
+
                 return false;
             }
         });
 
         Button right = (Button) findViewById(R.id.right);
         right.setOnTouchListener(new View.OnTouchListener() {
+            private Handler aHandler = new Handler();
+
+            private Runnable mUpdateTaskdown = new Runnable() {
+                public void run() {
+                    counter++;
+                    String text = "d " + counter;
+                    btt.write(text.getBytes());
+                    Tx.setText(text);
+                    aHandler.postAtTime(this, SystemClock.uptimeMillis());
+                }//end run
+            };// end runnable
+
             @Override
             public boolean onTouch(View arg0, MotionEvent arg1) {
                 int action = arg1.getAction();
 
-                if(action == MotionEvent.ACTION_DOWN) {
-                    String text = "#r";
-                    btt.write(text.getBytes());
-                    Tx.setText(text);
+                if (action == MotionEvent.ACTION_DOWN) {
                     Toast.makeText(getApplicationContext(), "dreapta", Toast.LENGTH_SHORT).show();
+                    aHandler.removeCallbacks(mUpdateTaskdown);
+                    aHandler.postAtTime(mUpdateTaskdown,SystemClock.uptimeMillis() + 50);
                     return true;
                 } else if (action == MotionEvent.ACTION_UP) {
-                    Tx.setText("");
+                    counter = 0;
+                    Tx.setText("" + counter);
+                    aHandler.removeCallbacks(mUpdateTaskdown);
                     return true;
                 }
+
                 return false;
             }
         });
