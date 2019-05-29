@@ -313,37 +313,34 @@ public class ControllerActivity extends AppCompatActivity {
         });
     }
 
-    public void goBack(View v){
+    public void goBack(View v) {
         Intent myIntent = new Intent(getBaseContext(), MainActivity.class);
         TextView numeSoferText = (TextView) findViewById(R.id.numeSofer);
         myIntent.putExtra("numeSofer", numeSoferText.getText().toString());
         startActivity(myIntent);
     }
 
-    public void initiateBluetoothProcess(){
-        if (bta.isEnabled()){
-            //attempt to connect to bluetooth module
-            BluetoothSocket tmp = null;
+    public void initiateBluetoothProcess() {
+        if (bta.isEnabled()) {
             mmDevice = bta.getRemoteDevice(MODULE_MAC);
 
-            //create socket
+            // create socket
             try {
-                tmp = mmDevice.createRfcommSocketToServiceRecord(MY_UUID);
-                mmSocket = tmp;
+                mmSocket = mmDevice.createRfcommSocketToServiceRecord(MY_UUID);
                 mmSocket.connect();
-            } catch (IOException e){
+            } catch (IOException e) {
                 try {
                     mmSocket.close();
-                } catch (IOException c){
+                } catch (IOException c) {
                     return;
                 }
             }
 
-            mHandler = new Handler(Looper.getMainLooper()){
+            mHandler = new Handler(Looper.getMainLooper()) {
                 @Override
                 public void handleMessage(Message msg) {
                     //super.handleMessage(msg);
-                    if (msg.what == ConnectedThread.RESPONSE_MESSAGE){
+                    if (msg.what == ConnectedThread.RESPONSE_MESSAGE) {
                         String txt = (String)msg.obj;
                     }
                 }
