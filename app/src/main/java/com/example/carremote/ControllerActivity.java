@@ -37,7 +37,7 @@ public class ControllerActivity extends AppCompatActivity {
 
     public static String MODULE_MAC;
 
-    private int counter = 0;
+    private int delay = 50;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -70,11 +70,10 @@ public class ControllerActivity extends AppCompatActivity {
 
             private Runnable mUpdateTaskdown = new Runnable() {
                 public void run() {
-                    counter++;
-                    String text = "u " + counter;
+                    String text = "u";
                     btt.write(text.getBytes());
                     Tx.setText(text);
-                    aHandler.postAtTime(this, SystemClock.uptimeMillis() + 50);
+                    aHandler.postAtTime(this, SystemClock.uptimeMillis() + delay);
                 }//end run
             };// end runnable
 
@@ -83,11 +82,12 @@ public class ControllerActivity extends AppCompatActivity {
                 if (arg1.getAction() == MotionEvent.ACTION_DOWN) {
                     Toast.makeText(getApplicationContext(), "inainte", Toast.LENGTH_SHORT).show();
                     aHandler.removeCallbacks(mUpdateTaskdown);
-                    aHandler.postAtTime(mUpdateTaskdown, SystemClock.uptimeMillis() + 50);
+                    aHandler.postAtTime(mUpdateTaskdown, SystemClock.uptimeMillis() + delay);
                     return true;
                 } else if (arg1.getAction() == MotionEvent.ACTION_UP) {
-                    counter = 0;
-                    Tx.setText("" + counter);
+                    String text = "s";
+                    btt.write(text.getBytes());
+                    Tx.setText("");
                     aHandler.removeCallbacks(mUpdateTaskdown);
                     return true;
                 }
@@ -102,11 +102,10 @@ public class ControllerActivity extends AppCompatActivity {
 
             private Runnable mUpdateTaskdown = new Runnable() {
                 public void run() {
-                    counter++;
-                    String text = "d " + counter;
+                    String text = "d";
                     btt.write(text.getBytes());
                     Tx.setText(text);
-                    aHandler.postAtTime(this, SystemClock.uptimeMillis() + 50);
+                    aHandler.postAtTime(this, SystemClock.uptimeMillis() + delay);
                 }//end run
             };// end runnable
 
@@ -115,11 +114,12 @@ public class ControllerActivity extends AppCompatActivity {
                 if (arg1.getAction() == MotionEvent.ACTION_DOWN) {
                     Toast.makeText(getApplicationContext(), "inapoi", Toast.LENGTH_SHORT).show();
                     aHandler.removeCallbacks(mUpdateTaskdown);
-                    aHandler.postAtTime(mUpdateTaskdown, SystemClock.uptimeMillis() + 50);
+                    aHandler.postAtTime(mUpdateTaskdown, SystemClock.uptimeMillis() + delay);
                     return true;
                 } else if (arg1.getAction() == MotionEvent.ACTION_UP) {
-                    counter = 0;
-                    Tx.setText("" + counter);
+                    String text = "s";
+                    btt.write(text.getBytes());
+                    Tx.setText("");
                     aHandler.removeCallbacks(mUpdateTaskdown);
                     return true;
                 }
@@ -134,11 +134,10 @@ public class ControllerActivity extends AppCompatActivity {
 
             private Runnable mUpdateTaskdown = new Runnable() {
                 public void run() {
-                    counter++;
-                    String text = "l " + counter;
+                    String text = "l";
                     btt.write(text.getBytes());
                     Tx.setText(text);
-                    aHandler.postAtTime(this, SystemClock.uptimeMillis() + 50);
+                    aHandler.postAtTime(this, SystemClock.uptimeMillis() + delay);
                 }//end run
             };// end runnable
 
@@ -147,11 +146,12 @@ public class ControllerActivity extends AppCompatActivity {
                 if (arg1.getAction() == MotionEvent.ACTION_DOWN) {
                     Toast.makeText(getApplicationContext(), "stanga", Toast.LENGTH_SHORT).show();
                     aHandler.removeCallbacks(mUpdateTaskdown);
-                    aHandler.postAtTime(mUpdateTaskdown, SystemClock.uptimeMillis() + 50);
+                    aHandler.postAtTime(mUpdateTaskdown, SystemClock.uptimeMillis() + delay);
                     return true;
                 } else if (arg1.getAction() == MotionEvent.ACTION_UP) {
-                    counter = 0;
-                    Tx.setText("" + counter);
+                    String text = "s";
+                    btt.write(text.getBytes());
+                    Tx.setText("");
                     aHandler.removeCallbacks(mUpdateTaskdown);
                     return true;
                 }
@@ -166,11 +166,10 @@ public class ControllerActivity extends AppCompatActivity {
 
             private Runnable mUpdateTaskdown = new Runnable() {
                 public void run() {
-                    counter++;
-                    String text = "d " + counter;
+                    String text = "r";
                     btt.write(text.getBytes());
                     Tx.setText(text);
-                    aHandler.postAtTime(this, SystemClock.uptimeMillis() + 50);
+                    aHandler.postAtTime(this, SystemClock.uptimeMillis() + delay);
                 }//end run
             };// end runnable
 
@@ -179,11 +178,12 @@ public class ControllerActivity extends AppCompatActivity {
                 if (arg1.getAction() == MotionEvent.ACTION_DOWN) {
                     Toast.makeText(getApplicationContext(), "dreapta", Toast.LENGTH_SHORT).show();
                     aHandler.removeCallbacks(mUpdateTaskdown);
-                    aHandler.postAtTime(mUpdateTaskdown, SystemClock.uptimeMillis() + 50);
+                    aHandler.postAtTime(mUpdateTaskdown, SystemClock.uptimeMillis() + delay);
                     return true;
                 } else if (arg1.getAction() == MotionEvent.ACTION_UP) {
-                    counter = 0;
-                    Tx.setText("" + counter);
+                    String text = "s";
+                    btt.write(text.getBytes());
+                    Tx.setText("");
                     aHandler.removeCallbacks(mUpdateTaskdown);
                     return true;
                 }
@@ -197,14 +197,12 @@ public class ControllerActivity extends AppCompatActivity {
             @Override
             public boolean onTouch(View arg0, MotionEvent arg1) {
                 if (arg1.getAction() == MotionEvent.ACTION_DOWN) {
-                    counter++;
-                    String text = "a " + counter;
+                    String text = "a";
                     btt.write(text.getBytes());
                     Tx.setText(text);
                     return true;
                 } else if (arg1.getAction() == MotionEvent.ACTION_UP) {
-                    counter = 0;
-                    Tx.setText("" + counter);
+                    Tx.setText("");
                     return true;
                 }
 
@@ -217,14 +215,12 @@ public class ControllerActivity extends AppCompatActivity {
             @Override
             public boolean onTouch(View arg0, MotionEvent arg1) {
                 if (arg1.getAction() == MotionEvent.ACTION_DOWN) {
-                    counter++;
-                    String text = "b " + counter;
+                    String text = "b";
                     btt.write(text.getBytes());
                     Tx.setText(text);
                     return true;
                 } else if (arg1.getAction() == MotionEvent.ACTION_UP) {
-                    counter = 0;
-                    Tx.setText("" + counter);
+                    Tx.setText("");
                     return true;
                 }
 
@@ -237,14 +233,12 @@ public class ControllerActivity extends AppCompatActivity {
             @Override
             public boolean onTouch(View arg0, MotionEvent arg1) {
                 if (arg1.getAction() == MotionEvent.ACTION_DOWN) {
-                    counter++;
-                    String text = "c " + counter;
+                    String text = "c";
                     btt.write(text.getBytes());
                     Tx.setText(text);
                     return true;
                 } else if (arg1.getAction() == MotionEvent.ACTION_UP) {
-                    counter = 0;
-                    Tx.setText("" + counter);
+                    Tx.setText("");
                     return true;
                 }
 
@@ -257,14 +251,12 @@ public class ControllerActivity extends AppCompatActivity {
             @Override
             public boolean onTouch(View arg0, MotionEvent arg1) {
                 if (arg1.getAction() == MotionEvent.ACTION_DOWN) {
-                    counter++;
-                    String text = "x " + counter;
+                    String text = "x";
                     btt.write(text.getBytes());
                     Tx.setText(text);
                     return true;
                 } else if (arg1.getAction() == MotionEvent.ACTION_UP) {
-                    counter = 0;
-                    Tx.setText("" + counter);
+                    Tx.setText("");
                     return true;
                 }
 
@@ -277,14 +269,12 @@ public class ControllerActivity extends AppCompatActivity {
             @Override
             public boolean onTouch(View arg0, MotionEvent arg1) {
                 if (arg1.getAction() == MotionEvent.ACTION_DOWN) {
-                    counter++;
-                    String text = "y " + counter;
+                    String text = "y";
                     btt.write(text.getBytes());
                     Tx.setText(text);
                     return true;
                 } else if (arg1.getAction() == MotionEvent.ACTION_UP) {
-                    counter = 0;
-                    Tx.setText("" + counter);
+                    Tx.setText("");
                     return true;
                 }
 
@@ -297,14 +287,12 @@ public class ControllerActivity extends AppCompatActivity {
             @Override
             public boolean onTouch(View arg0, MotionEvent arg1) {
                 if (arg1.getAction() == MotionEvent.ACTION_DOWN) {
-                    counter++;
-                    String text = "z " + counter;
+                    String text = "z";
                     btt.write(text.getBytes());
                     Tx.setText(text);
                     return true;
                 } else if (arg1.getAction() == MotionEvent.ACTION_UP) {
-                    counter = 0;
-                    Tx.setText("" + counter);
+                    Tx.setText("");
                     return true;
                 }
 

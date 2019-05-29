@@ -3,7 +3,6 @@ package com.example.carremote;
 import android.bluetooth.BluetoothSocket;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.IOException;
