@@ -15,11 +15,11 @@ public class ConnectedThread extends Thread {
     private final InputStream mmInStream;
     private final OutputStream mmOutStream;
     public static final int RESPONSE_MESSAGE = 10;
-    Handler uih;
+    Handler handler;
 
-    public ConnectedThread(BluetoothSocket socket, Handler uih) {
+    public ConnectedThread(BluetoothSocket socket, Handler handler) {
         mmSocket = socket;
-        this.uih = uih;
+        this.handler = handler;
 
         InputStream tmpIn = null;
         OutputStream tmpOut = null;
@@ -40,15 +40,15 @@ public class ConnectedThread extends Thread {
     }
 
     public void run() {
-        BufferedReader br;
-        br = new BufferedReader(new InputStreamReader(mmInStream));
+        BufferedReader br = new BufferedReader(new InputStreamReader(mmInStream));
+
         while (true){
             try {
                 String resp = br.readLine();
                 Message msg = new Message();
                 msg.what = RESPONSE_MESSAGE;
                 msg.obj = resp;
-                uih.sendMessage(msg);
+                handler.sendMessage(msg);
             } catch(IOException e) {
                 break;
             }
@@ -58,12 +58,6 @@ public class ConnectedThread extends Thread {
     public void write(byte[] bytes) {
         try {
             mmOutStream.write(bytes);
-        } catch(IOException e) {}
-    }
-
-    public void cancel() {
-        try {
-            mmSocket.close();
         } catch(IOException e) {}
     }
 }
