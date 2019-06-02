@@ -22,7 +22,6 @@ import java.util.UUID;
 
 public class ControllerActivity extends AppCompatActivity {
     private static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
-    public final static int REQUEST_ENABLE_BT = 1;
 
     private BluetoothAdapter bta;
     private BluetoothSocket mmSocket;
