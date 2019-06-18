@@ -337,6 +337,7 @@ public class ControllerActivity extends AppCompatActivity {
 
     // actiune button Dispozitive
     public void goBack(View v) {
+        btt.close();
         Intent myIntent = new Intent(getBaseContext(), MainActivity.class);
         TextView numeSoferText = (TextView) findViewById(R.id.numeSofer);
         myIntent.putExtra("numeSofer", numeSoferText.getText().toString());

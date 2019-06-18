@@ -11,9 +11,9 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 
 public class ConnectedThread extends Thread {
-    private final BluetoothSocket mmSocket; // stocare socket creat in ControllerActivity
-    private final InputStream mmInStream; // intrari
-    private final OutputStream mmOutStream; // iesiri
+    private BluetoothSocket mmSocket; // stocare socket creat in ControllerActivity
+    private InputStream mmInStream; // intrari
+    private OutputStream mmOutStream; // iesiri
     public static final int RESPONSE_MESSAGE = 10;
     Handler handler; // stocare handler creat in ControllerActivity
 
@@ -63,5 +63,23 @@ public class ConnectedThread extends Thread {
         try {
             mmOutStream.write(bytes);
         } catch(IOException e) {}
+    }
+
+    public void close() {
+        if (mmInStream != null) {
+            try {mmInStream.close();} catch (Exception e) {}
+            mmInStream = null;
+        }
+
+        if (mmOutStream != null) {
+            try {mmOutStream.close();} catch (Exception e) {}
+            mmOutStream = null;
+        }
+
+        if (mmSocket != null) {
+            try {mmSocket.close();} catch (Exception e) {}
+            mmSocket = null;
+        }
+
     }
 }
